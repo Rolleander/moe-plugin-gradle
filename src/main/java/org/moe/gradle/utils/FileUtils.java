@@ -21,6 +21,7 @@ import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileVisitDetails;
 import org.gradle.api.file.FileVisitor;
+import org.moe.gradle.MoeSDK;
 import org.moe.gradle.anns.NotNull;
 
 import java.io.File;
@@ -41,6 +42,11 @@ import java.util.jar.JarFile;
 import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class FileUtils {
+
+    public static FileCollection extractBootClasspath(Project project, MoeSDK moeSDK){
+        return project.files(moeSDK.getCoreJar().getAbsolutePath());
+    }
+
     public static void deleteFileOrFolder(final @NotNull Path path) throws IOException {
         Require.nonNull(path);
 

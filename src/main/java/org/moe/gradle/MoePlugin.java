@@ -22,6 +22,7 @@ import org.apache.tools.ant.taskdefs.condition.Os;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.JavaPlugin;
@@ -106,7 +107,8 @@ public class MoePlugin extends AbstractMoePlugin {
         Arrays.asList("compileJava", "compileTestJava").forEach(name -> {
             Task task = project.getTasks().getByName(name);
             CompileOptions compileOptions = ((JavaCompile) task).getOptions();
-            compileOptions.setBootClasspath(getSDK().getCoreJar().getAbsolutePath());
+            compileOptions.setBootstrapClasspath(FileUtils.extractBootClasspath(project,getSDK()));
+//           compileOptions.setBootClasspath(getSDK().getCoreJar().getAbsolutePath());
             compileOptions.setFork(true);
         });
 
